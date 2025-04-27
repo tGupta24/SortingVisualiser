@@ -1,90 +1,42 @@
-"use client";;
-import React from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { IconCheck, IconCopy } from "@tabler/icons-react";
+import React from 'react';
 
-export const CodeBlock = ({
-    language,
-    filename,
-    code,
-    highlightLines = [],
-    tabs = []
-}) => {
-    const [copied, setCopied] = React.useState(false);
-    const [activeTab, setActiveTab] = React.useState(0);
+const CodeBlock = ({ language, filename, highlightLines, code }) => {
+    // Function to add highlighting classes to specific lines
+    const getHighlightedCode = (lines) => {
+        return code.split('\n').map((line, index) => {
+            const lineNumber = index + 1;
+            const isHighlighted = lines.includes(lineNumber);
 
-    const tabsExist = tabs.length > 0;
-
-    const copyToClipboard = async () => {
-        const textToCopy = tabsExist ? tabs[activeTab].code : code;
-        if (textToCopy) {
-            await navigator.clipboard.writeText(textToCopy);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
-        }
+            return (
+                <div
+                    key={lineNumber}
+                    className={`px-4 py-1 ${isHighlighted ? 'bg-blue-800' : ''} transition-colors`}
+                >
+                    <span className="text-gray-400 mr-2">{lineNumber}</span>
+                    <span>{line}</span>
+                </div>
+            );
+        });
     };
 
-    const activeCode = tabsExist ? tabs[activeTab].code : code;
-    const activeLanguage = tabsExist
-        ? tabs[activeTab].language || language
-        : language;
-    const activeHighlightLines = tabsExist
-        ? tabs[activeTab].highlightLines || []
-        : highlightLines;
-
     return (
-        <div className="relative w-full rounded-lg bg-slate-900 p-4 font-mono text-sm">
-            <div className="flex flex-col gap-2">
-                {tabsExist && (
-                    <div className="flex  overflow-x-auto">
-                        {tabs.map((tab, index) => (
-                            <button
-                                key={index}
-                                onClick={() => setActiveTab(index)}
-                                className={`px-3 !py-2 text-xs transition-colors font-sans ${activeTab === index
-                                    ? "text-white"
-                                    : "text-zinc-400 hover:text-zinc-200"
-                                    }`}>
-                                {tab.name}
-                            </button>
-                        ))}
-                    </div>
-                )}
-                {!tabsExist && filename && (
-                    <div className="flex justify-between items-center py-2">
-                        <div className="text-xs text-zinc-400">{filename}</div>
-                        <button
-                            onClick={copyToClipboard}
-                            className="flex items-center gap-1 text-xs text-zinc-400 hover:text-zinc-200 transition-colors font-sans">
-                            {copied ? <IconCheck size={14} /> : <IconCopy size={14} />}
-                        </button>
-                    </div>
-                )}
+        <div className="bg-gray-900 text-white p-4 rounded-lg shadow-lg overflow-auto">
+            {/* Header with filename and language */}
+            <div className="flex justify-between items-center mb-2">
+                <span className="text-sm font-mono text-gray-400">{filename}</span>
+                <span className="text-sm text-gray-400">{language}</span>
             </div>
-            <SyntaxHighlighter
-                language={activeLanguage}
-                style={atomDark}
-                customStyle={{
-                    margin: 0,
-                    padding: 0,
-                    background: "transparent",
-                    fontSize: "0.875rem", // text-sm equivalent
-                }}
-                wrapLines={true}
-                showLineNumbers={true}
-                lineProps={(lineNumber) => ({
-                    style: {
-                        backgroundColor: activeHighlightLines.includes(lineNumber)
-                            ? "rgba(255,255,255,0.1)"
-                            : "transparent",
-                        display: "block",
-                        width: "100%",
-                    },
-                })}
-                PreTag="div">
-                {String(activeCode)}
-            </SyntaxHighlighter>
+
+            {/* Code block */}
+            <div className="font-mono text-sm">
+                <pre>
+                    <code>
+                        {getHighlightedCode(highlightLines)}
+                    </code>
+                </pre>
+            </div>
         </div>
     );
 };
+
+export { CodeBlock };

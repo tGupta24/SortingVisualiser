@@ -2,7 +2,7 @@ import React from "react";
 import { CodeBlock } from "./CodeBlock";
 import { Link } from "react-router-dom";
 export function HeapSort() {
-    const code = `function heapSort(arr) {
+  const code = `function heapSort(arr) {
   const n = arr.length;
 
   // Build a max heap
@@ -32,23 +32,23 @@ function heapify(arr, n, i) {
   }
 }`;
 
-    return (
-        <>
-            <div className="bg-black h-fit text-white">
-                <div>
-                    <button className=" mt-2 ml-2 px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-300">
-                        <Link to="/help" className="block">Back</Link>
-                    </button>
+  return (
+    <>
+      <div className="bg-black h-fit text-white">
+        <div>
+          <button className=" mt-2 ml-2 px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-300">
+            <Link to="/help" className="block">Back</Link>
+          </button>
 
-                </div>
-                <div className="max-w-3xl mx-auto w-full">
-                    <CodeBlock
-                        language="javascript"
-                        filename="HeapSort.js"
-                        highlightLines={[2, 5, 9, 14, 16]}
-                        code={code} />
-                </div>
-            </div>
-        </>
-    );
+        </div>
+        <div className="max-w-3xl mx-auto w-full">
+          <CodeBlock
+            language="cpp"
+            filename="HeapSort.cpp"
+            highlightLines={[2, 5, 9, 14, 16]}
+            code={code} />
+        </div>
+      </div>
+    </>
+  );
 }

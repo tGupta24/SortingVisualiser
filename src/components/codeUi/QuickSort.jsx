@@ -55,8 +55,8 @@ void quickSort(vector<int>& arr, int low, int high) {
 
             <div className="max-w-3xl mx-auto w-full">
                 <CodeBlock
-                    language="javascript"
-                    filename="QuickSort.js"
+                    language="cpp"
+                    filename="QuickSort.cpp"
                     highlightLines={[2, 6, 7, 9]}
                     code={code} />
             </div>

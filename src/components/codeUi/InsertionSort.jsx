@@ -25,8 +25,8 @@ export function InsertionSort() {
 
                 <div className="max-w-3xl mx-auto w-full">
                     <CodeBlock
-                        language="javascript"
-                        filename="InsertionSort.js"
+                        language="cpp"
+                        filename="InsertionSort.cpp"
                         highlightLines={[2, 5, 6, 8]}
                         code={code} />
                 </div>

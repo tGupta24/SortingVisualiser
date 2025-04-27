@@ -2,7 +2,7 @@ import React from "react";
 import { CodeBlock } from "./CodeBlock";
 import { Link } from "react-router-dom";
 export function MergeSort() {
-    const code = `function mergeSort(arr) {
+  const code = `function mergeSort(arr) {
   if (arr.length <= 1) return arr;
   
   const mid = Math.floor(arr.length / 2);
@@ -30,21 +30,21 @@ function merge(left, right) {
   return result.concat(left.slice(i), right.slice(j));
 }`;
 
-    return (
-        <>
-            <div className="bg-black h-fit text-white">
-                <button className=" mt-2 ml-2 px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-300">
-                    <Link to="/help" className="block">Back</Link>
-                </button>
+  return (
+    <>
+      <div className="bg-black h-fit text-white">
+        <button className=" mt-2 ml-2 px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-300">
+          <Link to="/help" className="block">Back</Link>
+        </button>
 
-                <div className="max-w-3xl mx-auto w-full">
-                    <CodeBlock
-                        language="javascript"
-                        filename="MergeSort.js"
-                        highlightLines={[2, 5, 6, 10, 14]}
-                        code={code} />
-                </div>
-            </div>
-        </>
-    );
+        <div className="max-w-3xl mx-auto w-full">
+          <CodeBlock
+            language="cpp"
+            filename="MergeSort.cpp"
+            highlightLines={[2, 5, 6, 10, 14]}
+            code={code} />
+        </div>
+      </div>
+    </>
+  );
 }
