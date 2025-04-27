@@ -267,130 +267,136 @@ export default function SortingVisualizer() {
     const current = steps[stepIndex] || { array, sortedIndices: [] };
 
     return (
-        <div className="flex h-fit bg-gray-100">
-            <div className="w-3/4 p-6 overflow-hidden">
-                <div className="bg-white p-6 rounded-lg shadow-md flex flex-col h-full">
-                    <div className="flex justify-between">
-                        <div>
-                            <h2 className="text-2xl font-bold mb-4">Sorting Visualizer</h2>
-                        </div>
-                        <div className="flex items-center space-x-1">  {/* Flex container to align icon and text */}
-                            <Link to="/help" className="text-blue-600 hover:text-blue-800 flex space-x-1 items-center">
-                                <div>help</div>
-                                <img src="/help.png" className="w-4 h-4" alt="" /> {/* Icon with a color */}
-                            </Link>
-                        </div>
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium mb-1">Enter your own array with valus less than 60(comma separated):</label>
-                        <input
-                            type="text"
-                            value={customInput}
-                            onChange={e => setCustomInput(e.target.value)}
-                            className="border px-3 py-1 w-full rounded mb-2"
-                            placeholder="e.g. 23,12,45,8"
-                        />
-                        <label className="inline-flex items-center">
-                            <input
-                                type="checkbox"
-                                checked={useCustom}
-                                onChange={() => setUseCustom(v => !v)}
-                                className="mr-2"
-                            />
-                            Use Custom Array
-                        </label>
-                    </div>
+        <>
+            <div className="flex sm:hidden items-center justify-center min-h-screen text-center bg-gray-100 text-red-500">
+                Not Available on Small Screen Right Now
+            </div>
 
-                    {/* Sorting Buttons */}
-                    <div className="flex flex-wrap gap-3 mb-4 items-center">
-                        {['bubble', 'selection', 'insertion', 'merge', 'quick', 'heap'].map(alg => (
-                            <button key={alg} onClick={() => startSort(alg)} disabled={!!algorithm}
-                                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50">
-                                {alg.charAt(0).toUpperCase() + alg.slice(1)} Sort
+            <div className=" h-fit bg-gray-100 hidden sm:flex">
+                <div className="w-3/4 p-6 overflow-hidden">
+                    <div className="bg-white p-6 rounded-lg shadow-md flex flex-col h-full">
+                        <div className="flex justify-between">
+                            <div>
+                                <h2 className="text-2xl font-bold mb-4">Sorting Visualizer</h2>
+                            </div>
+                            <div className="flex items-center space-x-1">  {/* Flex container to align icon and text */}
+                                <Link to="/help" className="text-blue-600 hover:text-blue-800 flex space-x-1 items-center">
+                                    <div>help</div>
+                                    <img src="/help.png" className="w-4 h-4" alt="" /> {/* Icon with a color */}
+                                </Link>
+                            </div>
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-sm font-medium mb-1">Enter your own array with valus less than 60(comma separated):</label>
+                            <input
+                                type="text"
+                                value={customInput}
+                                onChange={e => setCustomInput(e.target.value)}
+                                className="border px-3 py-1 w-full rounded mb-2"
+                                placeholder="e.g. 23,12,45,8"
+                            />
+                            <label className="inline-flex items-center">
+                                <input
+                                    type="checkbox"
+                                    checked={useCustom}
+                                    onChange={() => setUseCustom(v => !v)}
+                                    className="mr-2"
+                                />
+                                Use Custom Array
+                            </label>
+                        </div>
+
+                        {/* Sorting Buttons */}
+                        <div className="flex flex-wrap gap-3 mb-4 items-center">
+                            {['bubble', 'selection', 'insertion', 'merge', 'quick', 'heap'].map(alg => (
+                                <button key={alg} onClick={() => startSort(alg)} disabled={!!algorithm}
+                                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50">
+                                    {alg.charAt(0).toUpperCase() + alg.slice(1)} Sort
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Controls below Sorting Buttons */}
+                        <div className="flex flex-wrap items-center gap-4 mb-4">
+                            <button onClick={resetAll}
+                                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+                                Set Array
                             </button>
-                        ))}
-                    </div>
 
-                    {/* Controls below Sorting Buttons */}
-                    <div className="flex flex-wrap items-center gap-4 mb-4">
-                        <button onClick={resetAll}
-                            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
-                            Set Array
-                        </button>
+                            <button onClick={togglePlay} disabled={!algorithm}
+                                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50">
+                                {isPlaying ? 'Pause' : 'Start'}
+                            </button>
 
-                        <button onClick={togglePlay} disabled={!algorithm}
-                            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50">
-                            {isPlaying ? 'Pause' : 'Start'}
-                        </button>
-
-                        <div className="flex items-center gap-2">
-                            <label className="text-sm">Time:</label>
-                            <input
-                                type="range"
-                                min="50"
-                                max="1000"
-                                value={time}
-                                onChange={e => settime(+e.target.value)}
-                                className="cursor-pointer"
-                            />
+                            <div className="flex items-center gap-2">
+                                <label className="text-sm">Time:</label>
+                                <input
+                                    type="range"
+                                    min="50"
+                                    max="1000"
+                                    value={time}
+                                    onChange={e => settime(+e.target.value)}
+                                    className="cursor-pointer"
+                                />
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Visualization Bars */}
-                    <div className="flex-1 flex items-end overflow-x-auto space-x-2 pb-4">
-                        {current.array.map((val, idx) => {
-                            let bg = 'bg-indigo-500';
-                            const { indices = [], sortedIndices = [] } = current;
-                            if (sortedIndices.includes(idx)) bg = 'bg-gray-500';
-                            else if (indices.includes(idx)) {
-                                if (['compare', 'divide', 'key', 'pivot'].includes(current.type)) bg = 'bg-red-500';
-                                if (['swap', 'merge', 'shift', 'insert'].includes(current.type)) bg = 'bg-green-500';
-                            }
-                            return (
-                                <motion.div
-                                    key={idx}
-                                    className={`${bg} flex-1 rounded flex items-end justify-center text-white font-semibold relative`}
-                                    style={{ height: `${val * 3}px`, minWidth: '30px' }}
-                                    transition={{ duration: 0.2 }}>
+                        {/* Visualization Bars */}
+                        <div className="flex-1 flex items-end overflow-x-auto space-x-2 pb-4">
+                            {current.array.map((val, idx) => {
+                                let bg = 'bg-indigo-500';
+                                const { indices = [], sortedIndices = [] } = current;
+                                if (sortedIndices.includes(idx)) bg = 'bg-gray-500';
+                                else if (indices.includes(idx)) {
+                                    if (['compare', 'divide', 'key', 'pivot'].includes(current.type)) bg = 'bg-red-500';
+                                    if (['swap', 'merge', 'shift', 'insert'].includes(current.type)) bg = 'bg-green-500';
+                                }
+                                return (
+                                    <motion.div
+                                        key={idx}
+                                        className={`${bg} flex-1 rounded flex items-end justify-center text-white font-semibold relative`}
+                                        style={{ height: `${val * 3}px`, minWidth: '30px' }}
+                                        transition={{ duration: 0.2 }}>
 
-                                    <div className="absolute bottom-[-15px] text-xs text-black">{val}</div>
+                                        <div className="absolute bottom-[-15px] text-xs text-black">{val}</div>
 
-                                    <div className="flex-1 rounded flex items-end justify-center text-white font-semibold" style={{ height: `${val * 3}px`, minWidth: '30px' }} />
-                                </motion.div>
-                            );
-                        })}
-                    </div>
-
-
-                    {/* Previous and Next Buttons */}
-                    {algorithm && (
-                        <div className="flex justify-center gap-4 mt-2">
-                            <button onClick={prev} disabled={stepIndex === 0}
-                                className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50">Previous</button>
-                            <button onClick={next} disabled={stepIndex === steps.length - 1}
-                                className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50">Next</button>
+                                        <div className="flex-1 rounded flex items-end justify-center text-white font-semibold" style={{ height: `${val * 3}px`, minWidth: '30px' }} />
+                                    </motion.div>
+                                );
+                            })}
                         </div>
-                    )}
-                </div>
-            </div>
 
-            {/* Log / Steps */}
-            <div className="w-1/4 p-6 bg-gray-200 overflow-auto" ref={logRef}>
-                <div className="bg-white p-4 rounded-lg shadow-md">
-                    <h3 className="text-xl font-bold mb-3">Details</h3>
-                    <div className="text-sm h-[75vh] overflow-auto space-y-1">
-                        {steps.slice(0, stepIndex + 1).map((s, i) => (
-                            <p key={i} className={['swap', 'merge'].includes(s.type) ? 'text-green-800' : 'text-gray-800'}>
-                                {s.message}
-                            </p>
-                        ))}
+
+                        {/* Previous and Next Buttons */}
+                        {algorithm && (
+                            <div className="flex justify-center gap-4 mt-2">
+                                <button onClick={prev} disabled={stepIndex === 0}
+                                    className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50">Previous</button>
+                                <button onClick={next} disabled={stepIndex === steps.length - 1}
+                                    className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50">Next</button>
+                            </div>
+                        )}
                     </div>
                 </div>
-            </div>
-            {/* <div>
+
+                {/* Log / Steps */}
+                <div className="w-1/4 p-6 bg-gray-200 overflow-auto" ref={logRef}>
+                    <div className="bg-white p-4 rounded-lg shadow-md">
+                        <h3 className="text-xl font-bold mb-3">Details</h3>
+                        <div className="text-sm h-[75vh] overflow-auto space-y-1">
+                            {steps.slice(0, stepIndex + 1).map((s, i) => (
+                                <p key={i} className={['swap', 'merge'].includes(s.type) ? 'text-green-800' : 'text-gray-800'}>
+                                    {s.message}
+                                </p>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+                {/* <div>
                 <FloatingDock />
             </div> */}
-        </div>
+            </div>
+        </>
 
     );
 }
