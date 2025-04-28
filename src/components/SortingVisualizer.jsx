@@ -214,7 +214,7 @@ export default function SortingVisualizer() {
             : generateRandomArray(10);
         const valid = handleArray()
         if (!valid) {
-            alert("please addd")
+            alert("Please enter a valid array with values greater than 0 and less than or equal to 60.");
             return;
         }
         setArray(newArray);
@@ -252,7 +252,7 @@ export default function SortingVisualizer() {
             for (let i = 0; i < numbers.length; i++) {
                 const num = parseInt(numbers[i], 10);
                 if (isNaN(num) || num <= 0 || num > 60) {
-                    alert("Please enter a valid array with values greater than 0 and less than or equal to 60.");
+                    // alert("Please enter a valid array with values greater than 0 and less than or equal to 60.");
                     return false;
                 }
             }
