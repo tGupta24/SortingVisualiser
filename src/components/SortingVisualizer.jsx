@@ -212,6 +212,11 @@ export default function SortingVisualizer() {
         const newArray = useCustom
             ? customInput.split(",").map(Number).filter(n => !isNaN(n))
             : generateRandomArray(10);
+        const valid = handleArray()
+        if (!valid) {
+            alert("please addd")
+            return;
+        }
         setArray(newArray);
         setSteps([]);
         setStepIndex(0);
@@ -262,6 +267,13 @@ export default function SortingVisualizer() {
         setIsPlaying(p => !p);
     };
 
+    // useEffect(() => {
+    //     if (stepIndex == steps.length - 1) {
+
+    //         resetAll();
+    //     }
+    // }, [stepIndex])
+
     const prev = () => { setIsPlaying(false); setStepIndex(i => Math.max(i - 1, 0)); };
     const next = () => { setIsPlaying(false); setStepIndex(i => Math.min(i + 1, steps.length - 1)); };
     const current = steps[stepIndex] || { array, sortedIndices: [] };
@@ -277,7 +289,7 @@ export default function SortingVisualizer() {
                     <div className="bg-white p-6 rounded-lg shadow-md flex flex-col h-full">
                         <div className="flex justify-between">
                             <div>
-                                <h2 className="text-2xl font-bold mb-4">Sorting Visualizer</h2>
+                                <h2 className="text-2xl font-bold mb-4">VisualSort</h2>
                             </div>
                             <div className="flex items-center space-x-1">  {/* Flex container to align icon and text */}
                                 <Link to="/help" className="text-blue-600 hover:text-blue-800 flex space-x-1 items-center">
@@ -304,6 +316,11 @@ export default function SortingVisualizer() {
                                 />
                                 Use Custom Array
                             </label>
+                            <button onClick={resetAll}
+                                className="ml-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+                                Set Array
+                            </button>
+
                         </div>
 
                         {/* Sorting Buttons */}
@@ -318,10 +335,6 @@ export default function SortingVisualizer() {
 
                         {/* Controls below Sorting Buttons */}
                         <div className="flex flex-wrap items-center gap-4 mb-4">
-                            <button onClick={resetAll}
-                                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
-                                Set Array
-                            </button>
 
                             <button onClick={togglePlay} disabled={!algorithm}
                                 className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50">
@@ -374,6 +387,8 @@ export default function SortingVisualizer() {
                                     className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50">Previous</button>
                                 <button onClick={next} disabled={stepIndex === steps.length - 1}
                                     className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50">Next</button>
+                                <button onClick={resetAll} disabled={stepIndex !== steps.length - 1}
+                                    className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50">Reset</button>
                             </div>
                         )}
                     </div>
