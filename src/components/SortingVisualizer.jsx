@@ -382,6 +382,7 @@ export default function SortingVisualizer() {
 
                         {/* Previous and Next Buttons */}
                         {algorithm && (
+
                             <div className="flex justify-center gap-4 mt-2">
                                 <button onClick={prev} disabled={stepIndex === 0}
                                     className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50">Previous</button>
@@ -390,6 +391,7 @@ export default function SortingVisualizer() {
                                 <button onClick={resetAll} disabled={stepIndex !== steps.length - 1}
                                     className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50">Reset</button>
                             </div>
+
                         )}
                     </div>
                 </div>
